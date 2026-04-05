@@ -1,0 +1,15 @@
+name: TalkMaker实名绕过
+description: 跳过TalkMaker实名认证
+open_url: https://apps.apple.com/app/id6473696648
+author: Liovovo[https://github.com/Liovovo]
+homepage: https://github.com/Liovovo/ios-plugin
+icon: https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/3d/ff/e8/3dffe852-6b98-86d0-0899-5b5d8fa2c75c/Placeholder.mill/200x200bb-75.webp
+dns: {}
+body_rewrites:
+- response_jq:
+    match: ^https://api\.cikelink\.com/fm/v2/account/needVerify$
+    filter: .data.needVerify = false
+mitm:
+  hostnames:
+    includes:
+    - api.cikelink.com
