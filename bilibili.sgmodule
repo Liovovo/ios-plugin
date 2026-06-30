@@ -25,7 +25,7 @@ AND,((DOMAIN-SUFFIX,chat.bilibili.com), (OR,((DOMAIN-KEYWORD,stun), (DOMAIN-KEYW
 http-response-jq ^https:\/\/api\.bilibili\.com\/x\/pd-proxy\/tracker\? '.data[][]?="stun.chat.bilibili.com:3478"'
 http-response-jq ^https:\/\/api\.bilibili\.com\/pgc\/view\/v2\/app\/season\? 'del(.data.payment)'
 http-response-jq ^https:\/\/api\.bilibili\.com\/pgc\/page\/channel\? '.data.modules |= map(select(.type != "TIP") | if .type == "BANNER" then .module_data.items |= map(select(.url | startswith("https://www.bilibili.com/blackboard/era/") | not)) else . end)'
-http-response-jq ^https:\/\/app\.bilibili\.com\/x\/v2\/account\/(?:mine(?:\/ipad)?|myinfo)\? '.data.sections_v2 |= [.[] | if .items then .items |= [.[] | select((.title // "") as $t | ["看视频免流量","漫画","哔哩哔哩公益","游戏中心","能量加油站","必火推广","我的课程","听视频","未成年人守护"] | any(. == $t) | not)] else . end]'
+http-response-jq ^https:\/\/app\.bilibili\.com\/x\/v2\/account\/(?:mine(?:\/ipad)?|myinfo)\? '.data.sections_v2 |= [.[] | if .items then .items |= [.[] | select((.title // "") as $t | ["看视频免流量","漫画","哔哩哔哩公益","游戏中心","能量加油站","必火推广","我的课程","听视频","未成年人守护"] | any(. == $t) | not)] else . end] | del(.data.live_tip)'
 
 [Script]
 {{{空降助手}}} = type=http-request,pattern=^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.community\.service\.dm\.v1\.DM\/DmSegMobile$,argument="{"logLevel":"{{{日志等级}}}"}",requires-body=1,binary-body-mode=1,max-size=-1,engine=webview,timeout=10,script-path=https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/bilibili.protobuf.request.js
