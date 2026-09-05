@@ -1,0 +1,26 @@
+#!name=网易云音乐去广告mini
+#!desc=屏蔽基础网易云音乐广告mini版
+#!openUrl=https://apps.apple.com/app/id590338362
+#!author=YZHL[https://github.com/Liovovo]
+#!tag=去广告
+#!system=
+#!system_version=
+#!homepage=
+#!loon_version=3.4.0(962)
+#!icon=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/NeteaseCloudMusic.png
+#!date=2026-09-06 00:00:00
+
+[Rule]
+DOMAIN, iadmat.nosdn.127.net, REJECT
+DOMAIN, iadmatapk.nosdn.127.net, REJECT
+DOMAIN, iadmusicmat.music.126.net, REJECT
+DOMAIN, iadmusicmatvideo.music.126.net, REJECT
+DOMAIN, ipv4.music.163.com, REJECT
+DOMAIN, ipv6.music.163.com, REJECT
+
+[Rewrite]
+^https?:\/\/interface\d?\.music\.163\.com\/e?api\/(ocpc\/)?ad\/ mock-response-body data-type=text
+^https?:\/\/interface\d?\.music\.163\.com\/xeapi\/ad\/(?:loading\/get|get|config\/get|config|commonconfig|sniffing)$ mock-response-body data-type=text
+
+[MitM]
+hostname=interface*.music.163.com
